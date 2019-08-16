@@ -8,8 +8,12 @@ import org.apache.catalina.session.StandardSession;
 import org.apache.juli.logging.Log;
 import org.apache.juli.logging.LogFactory;
 
+/**
+ * @author yangzhongying
+ */
 public class RedisSession extends StandardSession {
 
+  private static final long serialVersionUID = 1126599994212206499L;
   private final Log log = LogFactory.getLog(RedisSession.class);
 
   protected static Boolean manualDirtyTrackingSupportEnabled = false;
@@ -56,18 +60,18 @@ public class RedisSession extends StandardSession {
     super.setAttribute(key, value);
 
     if ((value != null || oldValue != null)
-        && (value == null && oldValue != null
+            && (value == null && oldValue != null
             || oldValue == null && value != null
             || !value.getClass().isInstance(oldValue)
             || !value.equals(oldValue))) {
       if (this.manager instanceof RedisSessionManager
-          && ((RedisSessionManager) this.manager).getSaveOnChange()) {
+              && ((RedisSessionManager) this.manager).getSaveOnChange()) {
         try {
           ((RedisSessionManager) this.manager).save(this, true);
         } catch (IOException ex) {
           log.error(
-              "Error saving session on setAttribute (triggered by saveOnChange=true): "
-                  + ex.getMessage());
+                  "Error saving session on setAttribute (triggered by saveOnChange=true): "
+                          + ex.getMessage());
         }
       } else {
         changedAttributes.put(key, value);
@@ -79,13 +83,13 @@ public class RedisSession extends StandardSession {
   public void removeAttribute(String name) {
     super.removeAttribute(name);
     if (this.manager instanceof RedisSessionManager
-        && ((RedisSessionManager) this.manager).getSaveOnChange()) {
+            && ((RedisSessionManager) this.manager).getSaveOnChange()) {
       try {
         ((RedisSessionManager) this.manager).save(this, true);
       } catch (IOException ex) {
         log.error(
-            "Error saving session on setAttribute (triggered by saveOnChange=true): "
-                + ex.getMessage());
+                "Error saving session on setAttribute (triggered by saveOnChange=true): "
+                        + ex.getMessage());
       }
     } else {
       dirty = true;
@@ -111,7 +115,7 @@ public class RedisSession extends StandardSession {
 
   @Override
   public void readObjectData(java.io.ObjectInputStream in)
-      throws IOException, ClassNotFoundException {
+          throws IOException, ClassNotFoundException {
     super.readObjectData(in);
     this.setCreationTime(in.readLong());
   }

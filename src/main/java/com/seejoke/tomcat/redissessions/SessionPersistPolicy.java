@@ -3,6 +3,7 @@ package com.seejoke.tomcat.redissessions;
 import java.util.Arrays;
 
 /**
+ * SessionPersistPolicy
  * @author yangzhongying
  * @date 2019/8/15 15:44
  */

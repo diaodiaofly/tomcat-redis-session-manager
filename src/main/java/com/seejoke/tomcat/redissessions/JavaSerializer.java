@@ -11,6 +11,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.Map;
 import org.apache.catalina.util.CustomObjectInputStream;
 import org.apache.juli.logging.Log;
 import org.apache.juli.logging.LogFactory;
@@ -28,7 +29,7 @@ public class JavaSerializer implements Serializer {
 
   @Override
   public byte[] attributesHashFrom(RedisSession session) throws IOException {
-    HashMap<String, Object> attributes = new HashMap<>(16);
+    Map<String, Object> attributes = new HashMap<>(16);
     for (Enumeration<String> enumerator = session.getAttributeNames();
         enumerator.hasMoreElements(); ) {
       String key = enumerator.nextElement();
